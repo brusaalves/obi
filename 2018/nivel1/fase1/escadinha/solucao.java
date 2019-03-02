@@ -4,15 +4,15 @@ import java.lang.Math;
 class solucao {
 
     private static final Scanner IN = new Scanner(System.in);
-    private static final double MIN = Math.pow(-10, 6);
-    private static final double MAX = Math.pow(10, 6);
+    private static final int MAX = (int) Math.pow(10, 6);
+    private static final int MIN = MAX * -1;
 
     public static void main(String[] args) {
         int len = IN.nextInt();
         int[] seq = new int[len];
         int escadinhas = 0;
 
-        if (len < 0 || len > 1000) return;
+        if (len < 1 || len > 1000) return;
 
         for (int i = 0; i < len; i++) {
             int el = IN.nextInt();
@@ -25,15 +25,13 @@ class solucao {
             return;
         }
 
-        int previous = 0;
-        for (int i = 0; i < len; i++) {
-            if (i == (len - 1)) continue;
-            int current = Math.abs(seq[i]);
-            int next = Math.abs(seq[i + 1]);
-            if ((current - next) == (previous - current)) {
-                escadinhas++;
-            }
-            previous = current;
+        int mem = 0;
+        int atual = Math.abs(seq[0]);
+        for (int i = 1; i < len; i++) {
+            int corrente = Math.abs(seq[i]);
+            if (mem == atual - corrente) escadinhas++;
+            mem = atual - corrente;
+            atual = corrente;
         }
 
         System.out.println(escadinhas);
